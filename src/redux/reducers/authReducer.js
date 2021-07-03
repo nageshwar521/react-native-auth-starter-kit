@@ -1,5 +1,5 @@
 import {getAction} from '../../utils/common';
-import {actionTypes} from '../actionTypes';
+import actionTypes from '../actionTypes';
 import {defaultAuthState} from '../initialState';
 
 export const authReducer = (state = defaultAuthState, action) => {

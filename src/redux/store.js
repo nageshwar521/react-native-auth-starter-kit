@@ -5,6 +5,8 @@ import {authReducer} from './reducers/authReducer';
 import {commonReducer} from './reducers/commonReducer';
 import {userReducer} from './reducers/userReducer';
 
+const composeEnhancers = composeWithDevTools();
+
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,

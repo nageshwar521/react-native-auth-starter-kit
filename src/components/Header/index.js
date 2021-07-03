@@ -17,7 +17,7 @@ const Header = ({
   const {colors} = useTheme();
   const styles = getStyles();
 
-  const handleActionPress = (data) => {
+  const handleActionPress = data => {
     if (actions.length > 0 && onActionPress) {
       onActionPress(data);
     }
@@ -44,10 +44,12 @@ const Header = ({
         title={title}
         subtitle={subtitle}
       />
-      {actions.map((actionItem) => {
+      {actions.map(actionItem => {
         return actionItem.icon ? (
           <IconButton
-            color={colors.textLight}
+            color={
+              actionItem.type ? colors[actionItem.color] : colors.textLight
+            }
             key={actionItem.type}
             icon={actionItem.icon}
             onPress={handleActionPress.bind(null, actionItem)}

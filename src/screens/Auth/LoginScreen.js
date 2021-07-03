@@ -43,7 +43,11 @@ const LoginScreen = ({navigation}) => {
   }, [token, navigation]);
 
   return (
-    <Box justify="center" p={20} f={1} backgroundColor={theme.colors.secondary}>
+    <Box
+      justify="center"
+      p={20}
+      f={1}
+      backgroundColor={theme.colors.background}>
       <Container
         style={styles.container}
         title={getI18nMessage(loginTitle)}

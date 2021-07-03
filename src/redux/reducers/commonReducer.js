@@ -1,4 +1,4 @@
-import {actionTypes} from '../actionTypes';
+import actionTypes from '../actionTypes';
 import {defaultCommonState} from '../initialState';
 
 export const commonReducer = (state = defaultCommonState, action) => {

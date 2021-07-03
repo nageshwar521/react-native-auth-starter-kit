@@ -1,29 +1,87 @@
-import {axiosInstance} from '../axiosInstance';
+import axios from 'axios';
+import {apiBaseUrl} from '../config';
+import {store} from '../redux/store';
+
+axios.interceptors.request.use(config => {
+  // console.log(config);
+  const token = store.getState().accessToken;
+
+  if (token) {
+    config.headers.Authorization = token;
+  }
+
+  return config;
+});
+
+axios.interceptors.response.use(response => {
+  console.log(response, 'response');
+  return response.data;
+});
+
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const loginService = data => {
-  return axiosInstance.post('/auth/login', data);
+  const options = {
+    method: 'POST',
+    url: apiBaseUrl + '/auth/login',
+    headers: {'Content-Type': 'application/json'},
+    data,
+  };
+  return axios.request(options);
 };
 
-export const logoutService = data => {
-  return axiosInstance.post('/auth/logout');
+export const logoutService = () => {
+  const options = {
+    method: 'POST',
+    url: apiBaseUrl + '/auth/logout',
+    headers: {'Content-Type': 'application/json'},
+  };
+  return axios.request(options);
 };
 
 export const registerService = data => {
-  return axiosInstance.post('/auth/register', data);
+  const options = {
+    method: 'POST',
+    url: apiBaseUrl + '/auth/register',
+    headers: {'Content-Type': 'application/json'},
+    data,
+  };
+  return axios.request(options);
 };
 
 export const getUsersService = () => {
-  return axiosInstance.get('/users');
+  const options = {
+    method: 'GET',
+    url: apiBaseUrl + '/users',
+    headers: {'Content-Type': 'application/json'},
+  };
+  return axios.request(options);
 };
 
 export const getUserService = userId => {
-  return axiosInstance.get(`/users/${userId}`);
+  const options = {
+    method: 'GET',
+    url: apiBaseUrl + '/users/' + userId,
+    headers: {'Content-Type': 'application/json'},
+  };
+  return axios.request(options);
 };
 
 export const updateUserService = (userId, data) => {
-  return axiosInstance.post(`/users/${userId}`, data);
+  const options = {
+    method: 'POST',
+    url: apiBaseUrl + '/auth/register/' + userId,
+    headers: {'Content-Type': 'application/json'},
+    data,
+  };
+  return axios.request(options);
 };
 
 export const deleteUserService = userId => {
-  return axiosInstance.delete(`/users/${userId}`);
+  const options = {
+    method: 'DELETE',
+    url: apiBaseUrl + '/users/' + userId,
+    headers: {'Content-Type': 'application/json'},
+  };
+  return axios.request(options);
 };
