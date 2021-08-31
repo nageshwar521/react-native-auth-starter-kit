@@ -1,91 +1,106 @@
 import * as React from 'react';
 import {Appbar, IconButton} from 'react-native-paper';
-import createStyles from '../../utils/createStyles';
+import createStyles from '@src/utils/createStyles';
 import {useTheme} from 'react-native-paper';
 import Button from '../Button';
+import Content from '../Content';
+import {useNavigation} from '@react-navigation/native';
 
 const Header = ({
-  leftIcon = 'menu',
+  leftIcon,
   title,
+  getTitle,
   subtitle = '',
   actions = [],
   onLeftPress,
   onActionPress,
+  containerProps = {},
+  titleContainerStyle = {},
   titleStyle = {},
   subtitleStyle = {},
+  searchIcon = true,
+  notificationIcon = true,
+  titleLeftSize = 0,
+  getExtraContent,
 }) => {
-  const {colors} = useTheme();
-  const styles = getStyles();
+  const theme = useTheme();
+  const navigation = useNavigation();
+  const styles = getStyles({theme, leftIcon, titleLeftSize});
 
-  const handleActionPress = data => {
-    if (actions.length > 0 && onActionPress) {
-      onActionPress(data);
-    }
+  const handleSearch = () => {
+    navigation.navigate('Search');
   };
 
-  const handleToggleSidebar = () => {
-    console.log('handleToggleSidebar');
+  const handleNotifications = () => {
+    navigation.navigate('Notifications');
+  };
+
+  const handleLeftPress = () => {
     if (onLeftPress) {
       onLeftPress();
     }
   };
 
+  const handleActionPress = action => {
+    if (onActionPress) {
+      onActionPress(action);
+    }
+  };
+
   return (
-    <Appbar.Header>
-      {/* <Appbar.BackAction color={colors.textLight} onPress={_goBack} /> */}
-      <IconButton
-        color={colors.textLight}
-        icon={leftIcon}
-        onPress={handleToggleSidebar}
-      />
-      <Appbar.Content
-        titleStyle={[styles.titleStyle, titleStyle]}
-        subtitleStyle={[styles.subtitleStyle, subtitleStyle]}
-        title={title}
-        subtitle={subtitle}
-      />
-      {actions.map(actionItem => {
-        return actionItem.icon ? (
-          <IconButton
-            color={
-              actionItem.type ? colors[actionItem.color] : colors.textLight
-            }
-            key={actionItem.type}
-            icon={actionItem.icon}
-            onPress={handleActionPress.bind(null, actionItem)}
-            disabled={actionItem.disabled}
+    <Appbar.Header
+      theme={{colors: {primary: theme.colors.bgPrimary}}}
+      {...containerProps}
+      style={{height: 'auto'}}>
+      {leftIcon ? (
+        <Appbar.Action size={30} icon={leftIcon} onPress={handleLeftPress} />
+      ) : null}
+      {getTitle ? (
+        getTitle()
+      ) : (
+        <Appbar.Content
+          style={[styles.titleContainerStyle, titleContainerStyle]}
+          titleStyle={[styles.titleStyle, titleStyle]}
+          subtitleStyle={[styles.subtitleStyle, subtitleStyle]}
+          title={title}
+          subtitle={subtitle}
+        />
+      )}
+      {searchIcon ? (
+        <Appbar.Action size={30} icon="magnify" onPress={handleSearch} />
+      ) : null}
+      {notificationIcon ? (
+        <Appbar.Action
+          size={30}
+          icon="bell-outline"
+          onPress={handleNotifications}
+        />
+      ) : null}
+      {actions.map(action => {
+        return (
+          <Appbar.Action
+            key={action}
+            size={30}
+            icon={action}
+            onPress={handleActionPress.bind(null, action)}
           />
-        ) : (
-          <Button
-            position="full"
-            size="small"
-            mode="text"
-            labelStyle={styles.buttonTextStyle}
-            disabledLabelStyle={styles.disabledButtonTextStyle}
-            key={actionItem.type}
-            onPress={handleActionPress.bind(null, actionItem)}
-            disabled={actionItem.disabled}>
-            {actionItem.label}
-          </Button>
         );
       })}
     </Appbar.Header>
   );
 };
 
-const getStyles = () => {
+const getStyles = ({theme, leftIcon, titleLeftSize}) => {
   const styles = {
     titleStyle: {
-      color: '#FFF',
+      color: theme.colors.textDark,
+      fontWeight: '500',
+      fontFamily: 'Montserrat-Bold',
+      fontSize: 24,
     },
-    subtitleStyle: {
-      color: '#FFF',
-    },
-    buttonTextStyle: {
-      color: '#FFF',
-    },
-    disabledButtonTextStyle: {
-      color: '#CCC',
+    titleContainerStyle: {
+      alignItems: 'flex-start',
+      left: titleLeftSize,
     },
   };
   return createStyles(styles);

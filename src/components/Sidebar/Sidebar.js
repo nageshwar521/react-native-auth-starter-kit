@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Portal, Provider, Modal} from 'react-native-paper';
 import {Dimensions} from 'react-native';
-import createStyles from '../../utils/createStyles';
-import Container from '../../components/Container';
+import createStyles from '@src/utils/createStyles';
+import Container from '@src/components/Container';
 
 const {width, height} = Dimensions.get('screen');
 

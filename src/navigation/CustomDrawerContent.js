@@ -1,3 +1,4 @@
+import createStyles from '@src/utils/createStyles';
 import React, {useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
@@ -8,7 +9,6 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import createStyles from '../utils/createStyles';
 
 function CustomDrawerContent(props) {
   const [mainDrawer, setMainDrawer] = useState(true);
@@ -20,8 +20,8 @@ function CustomDrawerContent(props) {
     setFilteredItems([]);
   };
 
-  const onItemParentPress = (key) => {
-    const filteredMainDrawerRoutes = props.drawerItems.find((e) => {
+  const onItemParentPress = key => {
+    const filteredMainDrawerRoutes = props.drawerItems.find(e => {
       return e.key === key;
     });
     if (filteredMainDrawerRoutes.routes.length === 1) {
@@ -41,7 +41,7 @@ function CustomDrawerContent(props) {
   function renderMainDrawer() {
     return (
       <View>
-        {props.drawerItems.map((parent) => (
+        {props.drawerItems.map(parent => (
           <View key={parent.key}>
             <TouchableOpacity
               key={parent.key}
@@ -68,7 +68,7 @@ function CustomDrawerContent(props) {
           style={styles.backButtonRow}>
           <Text style={[styles.backButtonText, styles.title]}>{'BACK'}</Text>
         </TouchableOpacity>
-        {filteredItems.routes.map((route) => {
+        {filteredItems.routes.map(route => {
           return (
             <TouchableOpacity
               key={route.routeName}

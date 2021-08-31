@@ -6,13 +6,13 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import useLogout from '../hooks/useLogout';
-import {navigateOutside} from '../utils/navigationOutside';
+import useLogout from '@src/hooks/useLogout';
+import {navigateOutside} from '@src/utils/navigationOutside';
 import {useRoute} from '@react-navigation/core';
-import TaskDetails from '../screens/Tasks/TaskDetails';
-import TaskTabs from '../screens/Tasks/TaskTabs';
+import TaskDetails from '@screens/Tasks/TaskDetails';
+import TaskTabs from '@screens/Tasks/TaskTabs';
 import {Divider} from 'react-native-paper';
-import ProfileCard from '../screens/Profile/ProfileCard';
+import ProfileCard from '@screens/Profile/ProfileCard';
 
 const Drawer = createDrawerNavigator();
 

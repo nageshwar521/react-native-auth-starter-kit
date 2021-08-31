@@ -7,12 +7,9 @@ import {
   DrawerView,
   DrawerItem,
 } from '@react-navigation/drawer';
-import useLogout from '../hooks/useLogout';
 import {useRoute} from '@react-navigation/core';
-import TaskDetails from '../screens/Tasks/TaskDetails';
-import TaskTabs from '../screens/Tasks/TaskTabs';
 import {useTheme} from 'react-native-paper';
-import createStyles from '../utils/createStyles';
+import createStyles from '@src/utils/createStyles';
 
 const Drawer = createDrawerNavigator();
 

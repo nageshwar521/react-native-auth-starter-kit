@@ -2,9 +2,9 @@ import React from 'react';
 import {Box, Text} from 'react-native-design-utility';
 import {useTheme} from 'react-native-paper';
 import {launchImageLibrary} from 'react-native-image-picker';
-import useUploadApi from '../../hooks/useUploadApi';
-import createStyles from '../../utils/createStyles';
-import Button from '../../components/Button';
+import useUploadApi from '@src/hooks/useUploadApi';
+import createStyles from '@src/utils/createStyles';
+import Button from '@src/components/Button';
 
 const ProfileScreen = () => {
   const theme = useTheme();

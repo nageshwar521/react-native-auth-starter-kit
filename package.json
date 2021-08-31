@@ -1,5 +1,5 @@
 {
-  "name": "heydocmobile",
+  "name": "react-native-auth-starter-kit",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,9 +11,22 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@formatjs/intl-datetimeformat": "^4.1.6",
+    "@formatjs/intl-displaynames": "^5.1.6",
+    "@formatjs/intl-getcanonicallocales": "^1.7.1",
+    "@formatjs/intl-listformat": "^6.2.6",
+    "@formatjs/intl-locale": "^2.4.33",
+    "@formatjs/intl-numberformat": "^7.1.5",
+    "@formatjs/intl-pluralrules": "^4.0.28",
+    "@formatjs/intl-relativetimeformat": "^9.1.7",
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "github:react-native-async-storage/async-storage",
+    "@react-native-community/art": "^1.2.0",
+    "@react-native-community/cameraroll": "^4.0.4",
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-voice/voice": "^3.2.0",
+    "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
     "@reduxjs/toolkit": "^1.6.0",
@@ -27,27 +40,49 @@
     "nodemon": "^2.0.7",
     "react": "17.0.1",
     "react-native": "0.64.2",
+    "react-native-app-intro-slider": "^4.0.4",
+    "react-native-audio-recorder-player": "^3.1.1",
+    "react-native-camera": "^4.0.0",
+    "react-native-camera-roll-picker": "^2.0.0",
     "react-native-design-utility": "^2.0.4",
+    "react-native-device-size": "^0.1.0",
     "react-native-easy-toast": "^2.0.0",
     "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-image-crop-picker": "^0.36.2",
     "react-native-image-picker": "^4.0.3",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-localize": "^2.1.1",
+    "react-native-material-textfield": "^0.16.1",
+    "react-native-material-textfield-plus": "^0.17.0",
     "react-native-modal-datetime-picker": "^10.0.0",
+    "react-native-neomorph-shadows": "^1.1.2",
     "react-native-paper": "^4.9.1",
+    "react-native-paper-dates": "^0.4.6",
+    "react-native-permissions": "^3.0.5",
+    "react-native-progress": "^5.0.0",
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",
+    "react-native-splash-screen": "^3.2.0",
+    "react-native-svg": "^12.1.1",
+    "react-native-svg-transformer": "^0.14.3",
+    "react-native-svg-uri": "^1.2.3",
+    "react-native-swipe-gestures": "^1.0.5",
     "react-native-vector-icons": "^8.1.0",
     "react-redux": "^7.2.4",
     "react-socket-io-hooks": "^1.1.0",
+    "react-svg": "^14.0.3",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
+    "rn-fetch-blob": "^0.12.0",
     "socket.io": "^4.1.2",
     "socket.io-client": "^4.1.2",
     "socketcluster-client": "^14.3.2",
     "socketcluster-server": "^14.7.2",
     "sockjs": "^0.3.21",
     "styled-components": "^5.3.0",
+    "use-debounce": "^7.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -55,17 +90,21 @@
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "7.14.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
+    "react-native-svg-asset-plugin": "^0.5.0",
     "react-test-renderer": "17.0.1",
     "remote-redux-devtools": "^0.5.16"
   },
   "jest": {
     "preset": "react-native"
   },
-  "optionalDependencies": {
-    "bufferutil": "^4.0.3",
-    "utf-8-validate": "^5.0.5"
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts/",
+      "./src/assets/audio/"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
-import createStyles from '../../utils/createStyles';
+import createStyles from '@src/utils/createStyles';
 
 const Loader = ({
   isVisible = false,

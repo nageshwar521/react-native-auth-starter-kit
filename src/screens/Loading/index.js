@@ -1,8 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
 import styled from 'styled-components/native';
-import Content from '../../components/Content';
-import {messages} from '../../locales/messages';
+import Content from '@src/components/Content';
+import {messages} from '@src/translations/messages';
 
 const StyledLoadingScreen = styled(View)`
   flex: 1;

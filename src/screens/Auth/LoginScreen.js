@@ -1,93 +1,182 @@
-import React from 'react';
-import {Dimensions, View} from 'react-native';
-import Container from '../../components/Container';
-import {useDispatch, useSelector} from 'react-redux';
-import createStyles from '../../utils/createStyles';
-import {TextInput} from '../../components/Input';
-import {userLogin} from '../../redux/actions/authActions';
-import {getI18nMessage} from '../../translations/messages';
+import React, {useState} from 'react';
+import {SafeAreaView, View, TouchableOpacity} from 'react-native';
+import {Text, useTheme} from 'react-native-paper';
+import Container from '@src/components/Container';
+import Button from '@src/components/Button';
+import {getI18nMessage} from '@src/translations/messages';
 import {
-  usernameLabel,
+  registerSubTitle,
+  registerTitle,
+  registerPagination,
+  firstNameLabel,
+  lastNameLabel,
+  emailLabel,
   passwordLabel,
-  loginButtonLabel,
+  confirmPasswordLabel,
+  continueLabel,
+  genderLabel,
+  dobLabel,
   loginTitle,
-} from '../../translations/keys';
-import Button from '../../components/Button';
-import useStorage from '../../hooks/useStorage';
+  loginSubTitle,
+} from '@src/translations/keys';
+import createStyles from '@src/utils/createStyles';
+import Content from '@src/components/Content';
+import {getShadow} from '@src/utils/common';
 import {Box} from 'react-native-design-utility';
-import {useTheme} from 'react-native-paper';
+import {gradientWrapper} from '@src/utils/gradientWrapper';
+import DateTimeInput from '@src/components/Input/DateTimeInput';
+import {DropdownInput, TextInput} from '@src/components/Input';
+import {useNavigation} from '@react-navigation/native';
+import {ButtonGroup} from '@src/components/ButtonGroup/ButtonGroup';
 
-const {width, height} = Dimensions.get('screen');
-
-const LoginScreen = ({navigation}) => {
+const LoginScreen = () => {
   const theme = useTheme();
+  const navigation = useNavigation();
   const styles = getStyles({theme});
-  const dispatch = useDispatch();
-  const state = useSelector(state => state.auth);
-  const [username, setUsername] = React.useState('nagesh');
-  const [password, setPassword] = React.useState('reddy');
-  const {get, isLoading, response: token, error} = useStorage();
+  const defaultFormData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    gender: '',
+    dob: '',
+    password: '',
+    cPassword: '',
+  };
+  const [formData, setFormData] = useState(defaultFormData);
 
-  React.useEffect(() => {
-    get('accessToken');
-  }, []);
-
-  const handleLogin = () => {
-    dispatch(userLogin({username, password}));
+  const handleChange = (fieldName, value) => {
+    console.log('handleChange value', value);
+    setFormData({...formData, [fieldName]: value});
   };
 
-  React.useEffect(() => {
-    if (token) {
-      navigation.navigate('Home');
-    }
-  }, [token, navigation]);
+  const titleProps = {
+    type: 'title',
+  };
+  const subtitleProps = {
+    rightProps: {justifyContent: 'flex-end', backgroundColor: 'red'},
+    getRightComponent: () => {
+      return '1 of 4';
+    },
+  };
+
+  const handleLoginPress = () => {
+    navigation.navigate('Dashboard');
+  };
+
+  const handleRegisterPress = () => {
+    navigation.navigate('Register');
+  };
+
+  const handleForgotPress = () => {
+    navigation.navigate('ForgotPassword');
+  };
 
   return (
-    <Box
-      justify="center"
-      p={20}
-      f={1}
-      backgroundColor={theme.colors.background}>
+    <SafeAreaView style={styles.container}>
       <Container
         style={styles.container}
         title={getI18nMessage(loginTitle)}
-        titleStyle={styles.titleStyle}
-        titleProps={{align: 'center', type: 'title'}}>
-        <TextInput
-          size="small"
-          label={getI18nMessage(usernameLabel)}
-          value={username}
-          onChange={text => setUsername(text)}
+        subtitle={getI18nMessage(loginSubTitle)}>
+        <Box>
+          <TextInput
+            gradient
+            placeholder={getI18nMessage(emailLabel)}
+            style={styles.textInput}
+            vertical
+            value={formData['email']}
+            onChange={handleChange.bind(null, 'email')}
+          />
+          <TextInput
+            gradient
+            placeholder={getI18nMessage(passwordLabel)}
+            style={styles.textInput}
+            vertical
+            value={formData['password']}
+            onChange={handleChange.bind(null, 'password')}
+          />
+        </Box>
+        <ButtonGroup
+          primaryProps={{label: 'LOGIN', onPress: handleLoginPress}}
+          showLeft={false}
         />
-        <TextInput
-          size="small"
-          label={getI18nMessage(passwordLabel)}
-          value={password}
-          onChange={text => setPassword(text)}
+        <Box paddingVertical={20} flexDirection="row" justifyContent="center">
+          <TouchableOpacity onPress={handleForgotPress}>
+            <Text style={styles.alreadyAccTextStyle}>Forgot Password?</Text>
+          </TouchableOpacity>
+        </Box>
+        <View style={styles.flexGrow} />
+        <Box paddingVertical={20} flexDirection="row" justifyContent="center">
+          <Text style={styles.alreadyAccTextStyle}>
+            Don't have an account? Register Now
+          </Text>
+        </Box>
+        <ButtonGroup
+          secondaryProps={{
+            label: 'REGISTER',
+            onPress: handleRegisterPress,
+          }}
+          showRight={false}
         />
-        <Button
-          disabled={state.status === 'loading'}
-          position="full"
-          size="small"
-          onPress={handleLogin}>
-          {getI18nMessage(loginButtonLabel)}
-        </Button>
       </Container>
-    </Box>
+    </SafeAreaView>
   );
 };
 
 const getStyles = ({theme}) => {
   const styles = {
-    titleStyle: {
-      fontSize: 32,
-      alignItems: 'center',
-    },
     container: {
-      // backgroundColor: theme.colors.secondary,
+      flex: 1,
+    },
+    flexGrow: {flexGrow: 1},
+    titleStyle: {
+      fontWeight: '500',
+    },
+    centerStyle: {},
+    rightPaginationStyle: {},
+    textInput: {
+      fontSize: 18,
+      fontFamily: 'Montserrat-SemiBold',
+    },
+    textInputBgSplitLeft: {
+      flex: 1,
+      marginRight: 5,
+    },
+    textInputBgSplitRight: {
+      flex: 1,
+      marginLeft: 5,
+    },
+    textInputSplitLeft: {
+      flex: 1,
+      fontSize: 18,
+      fontFamily: 'Montserrat-SemiBold',
+    },
+    textInputSplitRight: {
+      flex: 1,
+      fontSize: 18,
+      fontFamily: 'Montserrat-SemiBold',
+    },
+    continueButtonTextStyle: {
+      color: theme.colors.light2,
+      fontSize: 19,
+      fontWeight: '500',
+      fontFamily: 'Montserrat-SemiBold',
+    },
+    continueButtonContainerStyle: {
+      borderRadius: 15,
+      ...getShadow(),
+    },
+    alreadyAccTextStyle: {
+      color: theme.colors.textDark,
+      fontWeight: '500',
+      fontFamily: 'Montserrat-Bold',
+    },
+    loginTextStyle: {
+      color: theme.colors.textDark,
+      fontWeight: '500',
+      fontFamily: 'Montserrat-Bold',
     },
   };
   return createStyles(styles);
 };
 
-export default LoginScreen;
+export {LoginScreen};

@@ -1,42 +1,95 @@
 import React from 'react';
-import {TextInput as TextInputField} from 'react-native-paper';
-import styled from 'styled-components/native';
-import createStyles from '../../utils/createStyles';
-
-const StyledTextInputField = styled(TextInputField)`
-  margin-bottom: 20px;
-`;
+import {View} from 'react-native';
+import {TextInput as TextInputField, useTheme} from 'react-native-paper';
+import createStyles from '@src/utils/createStyles';
+import {getShadow} from '@src/utils/common';
+import LinearGradient from 'react-native-linear-gradient';
+import {useSelector} from 'react-redux';
+import {Box} from 'react-native-design-utility';
 
 const TextInput = ({
+  onChange,
   mode = 'outlined',
   style = {},
-  size = 'medium',
-  onChange,
+  size = 'small',
   autoCapitalize = 'none',
-  ...props
+  gradient = true,
+  vertical = true,
+  label = '',
+  placeholder,
+  underlineColor = 'transparent',
+  outlineColor = 'transparent',
+  autoCorrect = false,
+  height = 40,
+  backgroundProps = {},
+  inputProps = {},
 }) => {
-  const styles = getStyles({size});
-  const handleChange = (val) => {
+  const theme = useTheme();
+  const currentTheme = useSelector(state => state.common.currentTheme);
+  const primary = currentTheme === 'dark';
+  const styles = getStyles({theme, primary, height});
+
+  const handleChange = val => {
     if (onChange) {
       onChange(val);
     }
   };
+
+  const verticalGradient = {
+    start: {x: 0, y: 0},
+    end: {x: 0, y: 1},
+  };
+
+  const horizontalGradient = {
+    start: {x: 0, y: 0},
+    end: {x: 1, y: 0},
+  };
+
   return (
-    <StyledTextInputField
-      style={[styles.container, style]}
-      dense={size === 'small'}
-      mode={mode}
-      onChangeText={handleChange}
-      autoCapitalize={autoCapitalize}
-      {...props}
-    />
+    <Box {...getShadow()}>
+      <LinearGradient
+        {...verticalGradient}
+        colors={
+          primary
+            ? [theme.colors.dark1, theme.colors.dark2]
+            : [theme.colors.light1, theme.colors.light2]
+        }
+        style={[styles.backgroundStyle]}
+        {...backgroundProps}>
+        <TextInputField
+          onChangeText={handleChange}
+          style={[styles.textInputStyle, style]}
+          dense={size === 'small'}
+          mode={mode}
+          autoCorrect={autoCorrect}
+          autoCapitalize={autoCapitalize}
+          placeholder={placeholder || `Enter ${label}`}
+          outlineColor="transparent"
+          underlineColor="transparent"
+          theme={{colors: {primary: 'transparent'}}}
+          placeholderTextColor={
+            primary ? theme.colors.border : theme.colors.border
+          }
+          {...inputProps}
+        />
+      </LinearGradient>
+    </Box>
   );
 };
 
-const getStyles = ({size}) => {
+const getStyles = ({theme, height}) => {
   const styles = {
-    container: {
-      padding: size === 'medium' ? 5 : size === 'small' ? 0 : 10,
+    textInputStyle: {
+      backgroundColor: 'transparent',
+      borderRadius: 10,
+      height: height,
+      justifyContent: 'center',
+      color: theme.colors.textDark,
+    },
+    backgroundStyle: {
+      borderRadius: 10,
+      marginBottom: 15,
+      height: height + 15,
     },
   };
   return createStyles(styles);
